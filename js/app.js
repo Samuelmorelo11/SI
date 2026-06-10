@@ -199,7 +199,7 @@ function renderClientes() {
   const tagClass = { VIP:'badge-vip', Nuevo:'badge-new', Debe:'badge-debe', Frecuente:'badge-frec' };
   tbody.innerHTML = list.map((c,i) => `
     <tr data-searchable="${c.nombre} ${c.ciudad} ${c.tag}">
-      <td><div class="td-name"><div class="crm-avatar" style="background:${pickColor(c.nombre)}">${initials(c.nombre)}</div><div><div class="n">${c.nombre}</div><div class="s">${c.wapp||'—'}</div></div></div></td>
+      <td><div class="td-name"><div class="crm-avatar" style="background:${pickColor(c.nombre)}">${initials(c.nombre)}</div><div><div class="n" style="cursor:pointer;text-decoration:underline;color:var(--clay)" onclick="verCliente(${i})">${c.nombre}</div><div class="s">${c.wapp||'—'}</div></div></div></td>
       <td>${c.wapp||'—'}</td>
       <td>${c.ciudad||'—'}</td>
       <td><span class="badge ${tagClass[c.tag]||'badge-new'}">${c.tag}</span></td>
@@ -450,3 +450,57 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 reveals.forEach(el => observer.observe(el));
+
+// ── MODAL HISTORIAL CLIENTE ──
+function verCliente(i) {
+  const c = crmData.clientes[i];
+  const ventas = crmData.ventas.filter(v => v.cliente.toLowerCase() === c.nombre.toLowerCase());
+  const totalCompras = ventas.reduce((s, v) => s + v.monto, 0);
+
+  const filasVentas = ventas.length
+    ? ventas.map(v => `
+        <tr>
+          <td>${v.fecha}</td>
+          <td>${v.producto}${v.cantidad > 1 ? ' (x' + v.cantidad + ')' : ''}</td>
+          <td>${fmt(v.monto)}</td>
+          <td>${v.tipo}</td>
+          <td><span class="badge ${v.estado === 'Pagada' ? 'badge-frec' : 'badge-debe'}">${v.estado}</span></td>
+        </tr>`).join('')
+    : '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:12px">Sin ventas registradas</td></tr>';
+
+  document.getElementById('modal-cliente-contenido').innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div class="crm-avatar" style="background:${pickColor(c.nombre)};width:52px;height:52px;font-size:1.3em">${initials(c.nombre)}</div>
+      <div>
+        <div style="font-size:1.2em;font-weight:700">${c.nombre}</div>
+        <div style="color:#888;font-size:.9em">${c.ciudad || '—'} · ${c.wapp || 'Sin WhatsApp'}</div>
+      </div>
+      <span class="badge ${{'VIP':'badge-vip','Nuevo':'badge-new','Debe':'badge-debe','Frecuente':'badge-frec'}[c.tag]||'badge-new'}" style="margin-left:auto">${c.tag}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div style="background:var(--bg,#f5f5f5);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:1.4em;font-weight:700">${ventas.length}</div>
+        <div style="font-size:.8em;color:#888">Compras totales</div>
+      </div>
+      <div style="background:var(--bg,#f5f5f5);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:1.4em;font-weight:700">${fmt(totalCompras)}</div>
+        <div style="font-size:.8em;color:#888">Total en ventas</div>
+      </div>
+    </div>
+    ${c.deuda > 0 ? `<div style="background:#fff3cd;border-radius:10px;padding:12px;margin-bottom:16px;font-size:.9em">⚠️ Deuda pendiente: <strong>${fmt(c.deuda)}</strong></div>` : ''}
+    <div style="font-weight:600;margin-bottom:8px">Historial de compras</div>
+    <div style="overflow-x:auto">
+      <table class="crm-table" style="font-size:.85em">
+        <thead><tr><th>Fecha</th><th>Producto</th><th>Monto</th><th>Tipo</th><th>Estado</th></tr></thead>
+        <tbody>${filasVentas}</tbody>
+      </table>
+    </div>
+  `;
+  document.getElementById('modal-cliente').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalCliente() {
+  document.getElementById('modal-cliente').style.display = 'none';
+  document.body.style.overflow = '';
+}
