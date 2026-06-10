@@ -152,6 +152,7 @@ function toggleForm(id) {
     if (id === 'form-venta') {
       populateProductoSelector();
       document.getElementById('v-cantidad').value = 1;
+      document.getElementById('v-nuevo-cliente').style.display = 'none';
     }
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -277,6 +278,12 @@ function populateProductoSelector() {
   select.value = current;
 }
 
+function onClienteInput() {
+  const nombre = document.getElementById('v-cliente').value.trim();
+  const esNuevo = nombre.length > 1 && !findCliente(nombre);
+  document.getElementById('v-nuevo-cliente').style.display = esNuevo ? 'block' : 'none';
+}
+
 function onProductoChange() {
   const idx = document.getElementById('v-producto').value;
   const cantidad = parseInt(document.getElementById('v-cantidad').value) || 1;
@@ -317,7 +324,9 @@ function saveVenta() {
   // Buscar cliente o crearlo automáticamente si no existe
   let cl = findCliente(cliente);
   if (!cl) {
-    cl = { nombre: cliente, tel: '', tag: 'Nuevo', deuda: 0, notas: '' };
+    const wapp   = (document.getElementById('v-wapp')?.value || '').trim();
+    const ciudad = (document.getElementById('v-ciudad')?.value || '').trim();
+    cl = { nombre: cliente, tel: wapp, ciudad: ciudad, tag: 'Nuevo', deuda: 0, notas: '' };
     crmData.clientes.unshift(cl);
   }
 

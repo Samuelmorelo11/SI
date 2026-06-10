@@ -591,7 +591,7 @@
         <div class="crm-form-panel" id="form-venta">
           <h3>➕ Nueva venta</h3>
           <div class="crm-form-grid">
-            <div class="crm-field"><label>Cliente</label><input id="v-cliente" type="text" placeholder="Nombre del cliente"></div>
+            <div class="crm-field"><label>Cliente</label><input id="v-cliente" type="text" placeholder="Nombre del cliente" oninput="onClienteInput()"></div>
             <div class="crm-field"><label>Producto / Servicio</label>
               <select id="v-producto" onchange="onProductoChange()">
                 <option value="">— Selecciona un producto —</option>
@@ -604,6 +604,14 @@
                 <option value="Contado">Contado</option>
                 <option value="Crédito">Crédito</option>
               </select>
+            </div>
+          </div>
+          <!-- Campos extra para cliente nuevo -->
+          <div id="v-nuevo-cliente" style="display:none; border-top: 1px solid var(--border); margin-top:12px; padding-top:12px;">
+            <p style="font-size:.85em; color:var(--clay); margin-bottom:8px;">👤 Cliente nuevo — completa sus datos:</p>
+            <div class="crm-form-grid">
+              <div class="crm-field"><label>WhatsApp</label><input id="v-wapp" type="tel" placeholder="+57 310..."></div>
+              <div class="crm-field"><label>Ciudad</label><input id="v-ciudad" type="text" placeholder="Ej. Riohacha"></div>
             </div>
           </div>
           <div class="crm-form-actions">
