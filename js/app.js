@@ -254,6 +254,10 @@ function updateInvStats() {
 }
 
 // ── VENTAS ──
+function findCliente(nombre) {
+  return crmData.clientes.find(c => c.nombre.toLowerCase() === nombre.toLowerCase());
+}
+
 function saveVenta() {
   const cliente  = document.getElementById('v-cliente').value.trim();
   const producto = document.getElementById('v-producto').value.trim();
@@ -263,13 +267,60 @@ function saveVenta() {
     if(!cliente) document.getElementById('v-cliente').focus();
     return;
   }
-  crmData.ventas.unshift({ fecha: today(), cliente, producto, monto, tipo, estado: tipo==='Crédito' ? 'Pendiente' : 'Pagada' });
+  const estado = tipo === 'Crédito' ? 'Pendiente' : 'Pagada';
+  crmData.ventas.unshift({ fecha: today(), cliente, producto, monto, tipo, estado });
+
+  // Actualizar la deuda del cliente según el tipo de venta
+  const cl = findCliente(cliente);
+  if (cl) {
+    if (tipo === 'Crédito') {
+      cl.deuda = (cl.deuda || 0) + monto;
+      if (cl.tag !== 'VIP') cl.tag = 'Debe';
+    } else {
+      // Contado: restar de la deuda si tiene saldo pendiente
+      cl.deuda = Math.max(0, (cl.deuda || 0) - monto);
+      if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
+    }
+  }
+
   saveStorage();
   toggleForm('form-venta');
   renderVentas();
+  renderClientes();
 }
-function marcarPagada(i) { crmData.ventas[i].estado='Pagada'; saveStorage(); renderVentas(); }
-function deleteVenta(i) { crmData.ventas.splice(i,1); saveStorage(); renderVentas(); }
+
+function marcarPagada(i) {
+  const venta = crmData.ventas[i];
+  // Restar el monto de la deuda del cliente al cobrar
+  if (venta.estado === 'Pendiente') {
+    const cl = findCliente(venta.cliente);
+    if (cl) {
+      cl.deuda = Math.max(0, (cl.deuda || 0) - venta.monto);
+      // Si ya no debe nada, quitarle el tag "Debe"
+      if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
+    }
+  }
+  crmData.ventas[i].estado = 'Pagada';
+  saveStorage();
+  renderVentas();
+  renderClientes();
+}
+
+function deleteVenta(i) {
+  const venta = crmData.ventas[i];
+  // Si la venta estaba pendiente, restar la deuda al cliente
+  if (venta.estado === 'Pendiente') {
+    const cl = findCliente(venta.cliente);
+    if (cl) {
+      cl.deuda = Math.max(0, (cl.deuda || 0) - venta.monto);
+      if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
+    }
+  }
+  crmData.ventas.splice(i, 1);
+  saveStorage();
+  renderVentas();
+  renderClientes();
+}
 function renderVentas() {
   const tbody = document.getElementById('ventas-tbody');
   const list = crmData.ventas;
