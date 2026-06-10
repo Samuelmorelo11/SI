@@ -326,7 +326,7 @@ function saveVenta() {
   if (!cl) {
     const wapp   = (document.getElementById('v-wapp')?.value || '').trim();
     const ciudad = (document.getElementById('v-ciudad')?.value || '').trim();
-    cl = { nombre: cliente, tel: wapp, ciudad: ciudad, tag: 'Nuevo', deuda: 0, notas: '' };
+    cl = { nombre: cliente, wapp: wapp, ciudad: ciudad, tag: 'Nuevo', deuda: 0, notas: '' };
     crmData.clientes.unshift(cl);
   }
 
