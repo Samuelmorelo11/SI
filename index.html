@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContaCliente — El CRM para tu negocio en La Guajira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Offline bar -->
+<div class="offline-bar">
+  📶 <span>Funciona sin internet — tu negocio no para aunque la señal falle</span>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">Conta<span>Cliente</span></div>
+  <ul>
+    <li><a href="#features">Módulos</a></li>
+    <li><a href="#how">¿Cómo funciona?</a></li>
+    <li><a href="#pricing">Precios</a></li>
+    <li><a href="#" onclick="event.preventDefault();openLogin()">Iniciar sesión</a></li>
+    <li><a href="#cta" class="nav-cta">Empezar gratis</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Hecho para negocios de Riohacha y La Guajira
+  </div>
+
+  <h1>Tu negocio,<br><em>organizado</em> de verdad</h1>
+
+  <p>El CRM que entiende tu tienda, salón o taller. Clientes, ventas y seguimiento en un solo lugar — desde el celular, aunque no haya señal.</p>
+
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">Empieza gratis →</a>
+    <a href="#how" class="btn-ghost">Ver cómo funciona</a>
+  </div>
+
+  <div class="hero-social">
+    <div class="avatars">
+      <div style="background: var(--terra);">MA</div>
+      <div style="background: var(--clay);">JR</div>
+      <div style="background: var(--leaf);">CB</div>
+      <div style="background: var(--sky);">LP</div>
+    </div>
+    <span>+120 negocios en La Guajira ya lo usan</span>
+  </div>
+
+  <!-- Phone mockup -->
+  <div class="hero-mockup">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="phone-header">
+          <div>
+            <div class="phone-header-title">ContaCliente</div>
+            <small>Hoy, lunes</small>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:16px; font-weight:700;">$847.000</div>
+            <small>ventas del mes</small>
+          </div>
+        </div>
+        <div class="phone-stats">
+          <div class="stat-card">
+            <div class="num">38</div>
+            <div class="lbl">Clientes activos</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">$124K</div>
+            <div class="lbl">Por cobrar</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">3</div>
+            <div class="lbl">Tareas hoy</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">🎂 2</div>
+            <div class="lbl">Cumpleaños</div>
+          </div>
+        </div>
+        <div class="phone-clients">
+          <div class="phone-clients-title">CLIENTES RECIENTES</div>
+          <div class="client-row">
+            <div class="avatar-sm" style="background: var(--terra);">MB</div>
+            <div class="client-info">
+              <div class="name">María Barros</div>
+              <div class="sub">Hace 5 días · $70.000</div>
+            </div>
+            <span class="tag-sm tag-vip">VIP</span>
+          </div>
+          <div class="client-row">
+            <div class="avatar-sm" style="background: var(--sky);">JC</div>
+            <div class="client-info">
+              <div class="name">Juan Carrillo</div>
+              <div class="sub">Hace 32 días · alerta</div>
+            </div>
+            <span class="tag-sm tag-new" style="background:rgba(200,80,80,0.12);color:#8B2020;">Debe</span>
+          </div>
+        </div>
+        <div class="wa-btn">📲 Enviar WhatsApp a María</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="section" id="features">
+  <span class="section-label reveal">Lo que incluye</span>
+  <h2 class="section-title reveal">Todo lo que necesita <em>tu negocio</em></h2>
+  <div class="features-grid">
+
+    <div class="feat-card reveal">
+      <div class="feat-icon" style="background: rgba(122,59,30,0.1);">👥</div>
+      <h3>Ficha de clientes</h3>
+      <p>Nombre, teléfono, WhatsApp, dirección, cumpleaños y preferencias. Etiqueta a tus clientes como VIP, Frecuente, Nuevo o Debe.</p>
+      <span class="feat-tag">CU-01 al CU-04</span>
+    </div>
+
+    <div class="feat-card reveal">
+      <div class="feat-icon" style="background: rgba(61,122,78,0.1);">🧾</div>
+      <h3>Ventas en 3 clics</h3>
+      <p>Registra una venta al contado o a crédito en menos de un minuto. Genera cotizaciones en PDF para enviar por WhatsApp.</p>
+      <span class="feat-tag">CU-05 al CU-08</span>
+    </div>
+
+    <div class="feat-card reveal">
+      <div class="feat-icon" style="background: rgba(43,110,138,0.1);">🔔</div>
+      <h3>Seguimiento automático</h3>
+      <p>Alerta cuando un cliente lleva 30 días sin comprar. Mensajes de cumpleaños automáticos. Tareas para no olvidar ninguna garantía ni llamada.</p>
+      <span class="feat-tag">CU-09 al CU-11</span>
+    </div>
+
+    <div class="feat-card reveal">
+      <div class="feat-icon" style="background: rgba(200,130,74,0.12);">📊</div>
+      <h3>Reportes simples</h3>
+      <p>¿Quiénes son tus 10 mejores clientes? ¿Cuánto te deben? ¿Qué días venden más? Gráficas que se entienden sin ser contador.</p>
+      <span class="feat-tag">CU-12 al CU-14</span>
+    </div>
+
+    <div class="feat-card reveal">
+      <div class="feat-icon" style="background: rgba(61,122,78,0.1);">📵</div>
+      <h3>Funciona sin señal</h3>
+      <p>Modo offline completo. Registra ventas y clientes aunque no haya internet. Sincroniza todo cuando vuelve la conexión.</p>
+      <span class="feat-tag">Vital en La Guajira</span>
+    </div>
+
+    <div class="feat-card reveal">
+      <div class="feat-icon" style="background: rgba(200,130,74,0.12);">👥</div>
+      <h3>Multiusuario</h3>
+      <p>El dueño ve todo. El empleado solo registra ventas y sus clientes asignados. Control sin complicaciones.</p>
+      <span class="feat-tag">Roles y permisos</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how-section" id="how">
+  <span class="section-label reveal">Proceso</span>
+  <h2 class="section-title reveal">Listo en <em>minutos</em>, no en días</h2>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3>Crea tu negocio</h3>
+      <p>Regístrate con tu nombre, tipo de negocio y ciudad. Sin tarjeta, sin complicaciones. 2 minutos.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <h3>Agrega tus clientes</h3>
+      <p>Importa desde tu lista de WhatsApp o agrega uno por uno. Ponle etiquetas y empieza a tener orden.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <h3>Registra tu primera venta</h3>
+      <p>Cliente → producto → pago. Tres pasos, menos de un minuto. El sistema hace el resto.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <h3>Deja que te ayude</h3>
+      <p>Las alertas, los recordatorios y los reportes trabajan solos. Tú enfócate en vender.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing-section" id="pricing">
+  <span class="section-label reveal">Planes</span>
+  <h2 class="section-title reveal">Precios para <em>microempresas</em>, no para corporaciones</h2>
+  <div class="pricing-grid">
+
+    <div class="price-card reveal">
+      <div class="price-plan">Básico</div>
+      <div class="price-amount">Gratis</div>
+      <div class="price-period">Para siempre · 1 usuario</div>
+      <ul class="price-features">
+        <li>Hasta 50 clientes</li>
+        <li>Registro de ventas</li>
+        <li>Fichas básicas de clientes</li>
+        <li>Botón de WhatsApp directo</li>
+      </ul>
+      <button class="btn-plan">Empezar gratis</button>
+    </div>
+
+    <div class="price-card featured reveal">
+      <div class="price-badge">MÁS POPULAR</div>
+      <div class="price-plan">Negocio</div>
+      <div class="price-amount">$29K</div>
+      <div class="price-period">por mes · hasta 3 usuarios</div>
+      <ul class="price-features">
+        <li>Clientes ilimitados</li>
+        <li>Ventas a crédito + cuentas por cobrar</li>
+        <li>Cotizaciones PDF</li>
+        <li>Alertas de seguimiento automático</li>
+        <li>Reportes y gráficas completas</li>
+        <li>Modo offline con sincronización</li>
+      </ul>
+      <button class="btn-plan">Comenzar 30 días gratis</button>
+    </div>
+
+    <div class="price-card reveal">
+      <div class="price-plan">Pro</div>
+      <div class="price-amount">$59K</div>
+      <div class="price-period">por mes · usuarios ilimitados</div>
+      <ul class="price-features">
+        <li>Todo lo del plan Negocio</li>
+        <li>Múltiples sucursales</li>
+        <li>API para integraciones</li>
+        <li>Exportar a Excel</li>
+        <li>Soporte prioritario por WhatsApp</li>
+      </ul>
+      <button class="btn-plan">Contactar</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <span class="section-label reveal">Testimonios</span>
+  <h2 class="section-title reveal">Lo que dicen los <em>negocios</em> de Riohacha</h2>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">Antes llevaba todo en un cuaderno y se me olvidaba cobrarle a la gente. Ahora el sistema me avisa solito y ya no pierdo plata.</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background: var(--terra);">MP</div>
+        <div>
+          <div class="test-name">Marleny Pushaina</div>
+          <div class="test-role">Salón de belleza · Riohacha</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">Con la señal que hay aquí no podía usar nada que necesitara internet todo el tiempo. Este funciona aunque no haya nada de señal.</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background: var(--sky);">CE</div>
+        <div>
+          <div class="test-name">Carlos Epieyu</div>
+          <div class="test-role">Tienda de abarrotes · Manaure</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">Mis clientes VIP reciben felicitación de cumpleaños y eso les encanta. Ya tengo más clientes fieles que nunca.</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background: var(--leaf);">LJ</div>
+        <div>
+          <div class="test-name">Luz Jayariyu</div>
+          <div class="test-role">Taller de costura · Uribia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <h2>Tu tía que vende fritos<br><em>lo puede usar.</em></h2>
+  <p>Si está bien hecho, cualquiera lo entiende. Empieza hoy gratis — sin tarjeta, sin complicaciones.</p>
+  <div class="cta-actions">
+    <a href="#" class="btn-cta-white">Crear cuenta gratis →</a>
+    <a href="#" class="btn-cta-ghost">Ver demo en vivo</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="logo">Conta<span style="color:var(--clay);">Cliente</span></div>
+  <nav>
+    <ul>
+      <li><a href="#">Privacidad</a></li>
+      <li><a href="#">Términos</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
+  </nav>
+  <span>© 2025 ContaCliente · Riohacha, La Guajira</span>
+</footer>
+
+<!-- ── REGISTRO MODAL ── -->
+<div class="modal-overlay" id="registerModal">
+  <div class="register-card">
+    <button class="modal-close" onclick="closeRegister()" aria-label="Cerrar">✕</button>
+    <div class="register-plan-badge">📋 Plan <span id="planName">Gratis</span></div>
+    <h2>Crea tu <em>cuenta</em></h2>
+    <p class="subtitle">En 2 minutos tu negocio está listo. Sin tarjeta de crédito.</p>
+
+    <div class="form-group">
+      <label>Nombre completo</label>
+      <input type="text" id="reg-nombre" placeholder="Ej. María Barros" autocomplete="name">
+    </div>
+    <div class="form-group">
+      <label>Nombre del negocio</label>
+      <input type="text" id="reg-negocio" placeholder="Ej. Salón Bella Guajira">
+    </div>
+    <div class="form-group">
+      <label>Tipo de negocio</label>
+      <select id="reg-tipo">
+        <option value="">Selecciona uno…</option>
+        <option>Tienda / Abarrotes</option>
+        <option>Salón de belleza</option>
+        <option>Taller / Confección</option>
+        <option>Restaurante / Comidas</option>
+        <option>Servicios (electricista, etc.)</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input type="tel" id="reg-wapp" placeholder="+57 310…" autocomplete="tel">
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres">
+      </div>
+    </div>
+
+    <button class="btn-register" onclick="handleRegister()">Crear mi cuenta →</button>
+    <p class="register-footer">¿Ya tienes cuenta? <a onclick="switchToLogin()">Inicia sesión</a></p>
+  </div>
+</div>
+
+<!-- ── LOGIN MODAL ── -->
+<div class="modal-overlay" id="loginModal">
+  <div class="login-card">
+    <button class="modal-close" onclick="closeLogin()" aria-label="Cerrar">✕</button>
+    <span class="login-logo">Conta<span>Cliente</span></span>
+    <h2>Bienvenido <em>de vuelta</em></h2>
+    <p class="subtitle">Ingresa con tu WhatsApp y contraseña.</p>
+    <div class="login-error" id="login-error">⚠️ WhatsApp o contraseña incorrectos. Intenta de nuevo.</div>
+    <div class="form-group">
+      <label>WhatsApp</label>
+      <input type="tel" id="login-wapp" placeholder="+57 310…" autocomplete="tel">
+    </div>
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input type="password" id="login-pass" placeholder="Tu contraseña" onkeydown="if(event.key==='Enter')handleLogin()">
+    </div>
+    <button class="btn-login" onclick="handleLogin()">Entrar a mi negocio →</button>
+    <div class="login-divider">o</div>
+    <p class="login-footer">¿No tienes cuenta? <a onclick="switchToRegister()">Regístrate gratis</a></p>
+  </div>
+</div>
+
+<!-- ── DASHBOARD BIENVENIDA ── -->
+<div class="dashboard-overlay" id="dashboardScreen">
+  <div class="dash-welcome">
+    <h2>¡Listo, <em id="dash-nombre">María</em>! 🎉</h2>
+    <p>Tu negocio ya está en ContaCliente</p>
+  </div>
+  <div class="dash-phone-wrap">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="phone-header">
+          <div>
+            <div class="phone-header-title" id="dash-negocio-title">Mi Negocio</div>
+            <small>Tu primer día</small>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:16px; font-weight:700;">$0</div>
+            <small>ventas del mes</small>
+          </div>
+        </div>
+        <div class="phone-stats">
+          <div class="stat-card">
+            <div class="num">0</div>
+            <div class="lbl">Clientes activos</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">$0</div>
+            <div class="lbl">Por cobrar</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">0</div>
+            <div class="lbl">Tareas hoy</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">🎂 0</div>
+            <div class="lbl">Cumpleaños</div>
+          </div>
+        </div>
+        <div class="phone-clients">
+          <div class="phone-clients-title">CLIENTES RECIENTES</div>
+          <div class="client-row" style="justify-content:center; color: var(--muted); font-size:10px; background: transparent; border-style: dashed;">
+            Aún no tienes clientes — ¡agrega el primero!
+          </div>
+        </div>
+        <div class="wa-btn">➕ Agregar primer cliente</div>
+      </div>
+    </div>
+  </div>
+  <div class="dash-plan-chip" id="dash-plan-chip">✓ Plan Gratis activado</div>
+  <div class="dash-actions">
+    <button class="btn-dash-primary">Agregar mi primer cliente →</button>
+    <button class="btn-dash-ghost" onclick="closeDashboard()">Volver al inicio</button>
+  </div>
+</div>
+
+<!-- ── CRM SCREEN ── -->
+<div class="crm-screen" id="crmScreen">
+  <!-- Top bar -->
+  <div class="crm-topbar">
+    <div class="crm-topbar-logo">Conta<span>Cliente</span></div>
+    <div class="crm-user-info">
+      <div class="crm-user-avatar" id="crm-avatar-initials">MB</div>
+      <span class="crm-user-name" id="crm-user-label">Mi Negocio</span>
+    </div>
+    <button class="crm-back-btn" onclick="closeCRM()">← Salir</button>
+  </div>
+
+  <div class="crm-body">
+    <!-- Sidebar -->
+    <aside class="crm-sidebar">
+      <div class="crm-nav-section">Principal</div>
+      <button class="crm-nav-item active" onclick="switchTab('clientes', this)">
+        <span class="nav-icon">👥</span> Clientes
+      </button>
+      <button class="crm-nav-item" onclick="switchTab('inventario', this)">
+        <span class="nav-icon">📦</span> Inventario
+      </button>
+      <button class="crm-nav-item" onclick="switchTab('ventas', this)">
+        <span class="nav-icon">🧾</span> Ventas
+      </button>
+    </aside>
+
+    <!-- Main -->
+    <main class="crm-main">
+
+      <!-- ── TAB CLIENTES ── -->
+      <div class="crm-tab active" id="tab-clientes">
+        <div class="crm-page-header">
+          <div>
+            <div class="crm-page-title">Tus <em>clientes</em></div>
+            <div class="crm-page-sub" id="clientes-count-sub">0 clientes registrados</div>
+          </div>
+        </div>
+        <div class="crm-stats-row">
+          <div class="crm-stat"><div class="s-num" id="stat-total-cl">0</div><div class="s-lbl">Total clientes</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-vip-cl">0</div><div class="s-lbl">Clientes VIP</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-deben-cl">0</div><div class="s-lbl">Con deuda</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-cobrar-cl">$0</div><div class="s-lbl">Por cobrar</div></div>
+        </div>
+
+        <div class="crm-form-panel" id="form-cliente">
+          <h3>➕ Nuevo cliente</h3>
+          <div class="crm-form-grid">
+            <div class="crm-field"><label>Nombre completo</label><input id="cl-nombre" type="text" placeholder="Ej. Marleny Pushaina"></div>
+            <div class="crm-field"><label>WhatsApp</label><input id="cl-wapp" type="tel" placeholder="+57 310..."></div>
+            <div class="crm-field"><label>Ciudad</label><input id="cl-ciudad" type="text" placeholder="Ej. Riohacha"></div>
+            <div class="crm-field"><label>Etiqueta</label>
+              <select id="cl-tag">
+                <option value="Nuevo">Nuevo</option>
+                <option value="Frecuente">Frecuente</option>
+                <option value="VIP">VIP</option>
+                <option value="Debe">Debe</option>
+              </select>
+            </div>
+            <div class="crm-field"><label>Deuda inicial ($)</label><input id="cl-deuda" type="number" placeholder="0" min="0"></div>
+          </div>
+          <div class="crm-form-actions">
+            <button class="btn-save" onclick="saveCliente()">Guardar cliente</button>
+            <button class="btn-cancel" onclick="toggleForm('form-cliente')">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="crm-toolbar">
+          <input class="crm-search" type="text" placeholder="🔍 Buscar cliente..." oninput="filterTable('clientes-tbody', this.value)">
+          <button class="btn-add" onclick="toggleForm('form-cliente')">+ Agregar cliente</button>
+        </div>
+        <div class="crm-table-wrap">
+          <table class="crm-table">
+            <thead><tr>
+              <th>Cliente</th><th>WhatsApp</th><th>Ciudad</th><th>Etiqueta</th><th>Deuda</th><th>Acciones</th>
+            </tr></thead>
+            <tbody id="clientes-tbody">
+              <tr><td colspan="6">
+                <div class="crm-empty">
+                  <div class="icon">👥</div>
+                  <p>Aún no tienes clientes. ¡Agrega el primero!</p>
+                  <button class="btn-add" style="margin:0 auto;" onclick="toggleForm('form-cliente')">+ Agregar cliente</button>
+                </div>
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── TAB INVENTARIO ── -->
+      <div class="crm-tab" id="tab-inventario">
+        <div class="crm-page-header">
+          <div>
+            <div class="crm-page-title">Tu <em>inventario</em></div>
+            <div class="crm-page-sub" id="inv-count-sub">0 productos registrados</div>
+          </div>
+        </div>
+        <div class="crm-stats-row">
+          <div class="crm-stat"><div class="s-num" id="stat-total-inv">0</div><div class="s-lbl">Productos</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-stock-inv">0</div><div class="s-lbl">Unidades totales</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-low-inv">0</div><div class="s-lbl">Stock bajo</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-val-inv">$0</div><div class="s-lbl">Valor inventario</div></div>
+        </div>
+
+        <div class="crm-form-panel" id="form-producto">
+          <h3>➕ Nuevo producto</h3>
+          <div class="crm-form-grid">
+            <div class="crm-field"><label>Nombre del producto</label><input id="pr-nombre" type="text" placeholder="Ej. Shampoo Pantene"></div>
+            <div class="crm-field"><label>Categoría</label>
+              <select id="pr-cat">
+                <option>General</option><option>Cuidado personal</option><option>Alimentos</option>
+                <option>Ropa / Tela</option><option>Herramientas</option><option>Otro</option>
+              </select>
+            </div>
+            <div class="crm-field"><label>Stock actual</label><input id="pr-stock" type="number" placeholder="0" min="0"></div>
+            <div class="crm-field"><label>Precio de venta ($)</label><input id="pr-precio" type="number" placeholder="0" min="0"></div>
+          </div>
+          <div class="crm-form-actions">
+            <button class="btn-save" onclick="saveProducto()">Guardar producto</button>
+            <button class="btn-cancel" onclick="toggleForm('form-producto')">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="crm-toolbar">
+          <input class="crm-search" type="text" placeholder="🔍 Buscar producto..." oninput="filterTable('inventario-tbody', this.value)">
+          <button class="btn-add" onclick="toggleForm('form-producto')">+ Agregar producto</button>
+        </div>
+        <div class="crm-table-wrap">
+          <table class="crm-table">
+            <thead><tr>
+              <th>Producto</th><th>Categoría</th><th>Stock</th><th>Precio</th><th>Estado</th><th>Acciones</th>
+            </tr></thead>
+            <tbody id="inventario-tbody">
+              <tr><td colspan="6">
+                <div class="crm-empty">
+                  <div class="icon">📦</div>
+                  <p>Aún no tienes productos en inventario.</p>
+                  <button class="btn-add" style="margin:0 auto;" onclick="toggleForm('form-producto')">+ Agregar producto</button>
+                </div>
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── TAB VENTAS ── -->
+      <div class="crm-tab" id="tab-ventas">
+        <div class="crm-page-header">
+          <div>
+            <div class="crm-page-title">Registro de <em>ventas</em></div>
+            <div class="crm-page-sub" id="ventas-count-sub">0 ventas registradas</div>
+          </div>
+        </div>
+        <div class="crm-stats-row">
+          <div class="crm-stat"><div class="s-num" id="stat-total-v">0</div><div class="s-lbl">Ventas totales</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-mes-v">$0</div><div class="s-lbl">Ingresos del mes</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-pend-v">0</div><div class="s-lbl">Pendientes</div></div>
+          <div class="crm-stat"><div class="s-num" id="stat-cred-v">$0</div><div class="s-lbl">En crédito</div></div>
+        </div>
+
+        <div class="crm-form-panel" id="form-venta">
+          <h3>➕ Nueva venta</h3>
+          <div class="crm-form-grid">
+            <div class="crm-field"><label>Cliente</label><input id="v-cliente" type="text" placeholder="Nombre del cliente"></div>
+            <div class="crm-field"><label>Producto / Servicio</label><input id="v-producto" type="text" placeholder="Ej. Corte de cabello"></div>
+            <div class="crm-field"><label>Monto ($)</label><input id="v-monto" type="number" placeholder="0" min="0"></div>
+            <div class="crm-field"><label>Tipo de pago</label>
+              <select id="v-tipo">
+                <option value="Contado">Contado</option>
+                <option value="Crédito">Crédito</option>
+              </select>
+            </div>
+          </div>
+          <div class="crm-form-actions">
+            <button class="btn-save" onclick="saveVenta()">Registrar venta</button>
+            <button class="btn-cancel" onclick="toggleForm('form-venta')">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="crm-toolbar">
+          <input class="crm-search" type="text" placeholder="🔍 Buscar venta..." oninput="filterTable('ventas-tbody', this.value)">
+          <button class="btn-add" onclick="toggleForm('form-venta')">+ Nueva venta</button>
+        </div>
+        <div class="crm-table-wrap">
+          <table class="crm-table">
+            <thead><tr>
+              <th>Fecha</th><th>Cliente</th><th>Producto</th><th>Monto</th><th>Tipo</th><th>Estado</th><th>Acciones</th>
+            </tr></thead>
+            <tbody id="ventas-tbody">
+              <tr><td colspan="7">
+                <div class="crm-empty">
+                  <div class="icon">🧾</div>
+                  <p>Aún no has registrado ventas.</p>
+                  <button class="btn-add" style="margin:0 auto;" onclick="toggleForm('form-venta')">+ Nueva venta</button>
+                </div>
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
