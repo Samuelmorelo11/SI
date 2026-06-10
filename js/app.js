@@ -314,16 +314,20 @@ function saveVenta() {
   const estado = tipo === 'Crédito' ? 'Pendiente' : 'Pagada';
   crmData.ventas.unshift({ fecha: today(), cliente, producto: producto.nombre, cantidad, monto, tipo, estado });
 
+  // Buscar cliente o crearlo automáticamente si no existe
+  let cl = findCliente(cliente);
+  if (!cl) {
+    cl = { nombre: cliente, tel: '', tag: 'Nuevo', deuda: 0, notas: '' };
+    crmData.clientes.unshift(cl);
+  }
+
   // Actualizar la deuda del cliente según el tipo de venta
-  const cl = findCliente(cliente);
-  if (cl) {
-    if (tipo === 'Crédito') {
-      cl.deuda = (cl.deuda || 0) + monto;
-      if (cl.tag !== 'VIP') cl.tag = 'Debe';
-    } else {
-      cl.deuda = Math.max(0, (cl.deuda || 0) - monto);
-      if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
-    }
+  if (tipo === 'Crédito') {
+    cl.deuda = (cl.deuda || 0) + monto;
+    if (cl.tag !== 'VIP') cl.tag = 'Debe';
+  } else {
+    cl.deuda = Math.max(0, (cl.deuda || 0) - monto);
+    if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
   }
 
   saveStorage();
