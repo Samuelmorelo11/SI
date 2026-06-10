@@ -149,6 +149,10 @@ function toggleForm(id) {
   if (panel.classList.contains('open')) {
     panel.querySelectorAll('input').forEach(i => i.value = '');
     panel.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    if (id === 'form-venta') {
+      populateProductoSelector();
+      document.getElementById('v-cantidad').value = 1;
+    }
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
@@ -258,17 +262,57 @@ function findCliente(nombre) {
   return crmData.clientes.find(c => c.nombre.toLowerCase() === nombre.toLowerCase());
 }
 
+function populateProductoSelector() {
+  const select = document.getElementById('v-producto');
+  if (!select) return;
+  const current = select.value;
+  select.innerHTML = '<option value="">— Selecciona un producto —</option>';
+  crmData.productos.forEach((p, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${p.nombre} (Stock: ${p.stock} uds. · ${fmt(p.precio)})`;
+    opt.disabled = p.stock === 0;
+    select.appendChild(opt);
+  });
+  select.value = current;
+}
+
+function onProductoChange() {
+  const idx = document.getElementById('v-producto').value;
+  const cantidad = parseInt(document.getElementById('v-cantidad').value) || 1;
+  if (idx === '') { document.getElementById('v-monto').value = ''; return; }
+  const precio = crmData.productos[idx].precio;
+  document.getElementById('v-monto').value = precio * cantidad;
+}
+
+function onCantidadChange() {
+  const idx = document.getElementById('v-producto').value;
+  if (idx === '') return;
+  const cantidad = parseInt(document.getElementById('v-cantidad').value) || 1;
+  const precio = crmData.productos[idx].precio;
+  document.getElementById('v-monto').value = precio * cantidad;
+}
+
 function saveVenta() {
   const cliente  = document.getElementById('v-cliente').value.trim();
-  const producto = document.getElementById('v-producto').value.trim();
+  const prodIdx  = document.getElementById('v-producto').value;
+  const cantidad = parseInt(document.getElementById('v-cantidad').value) || 1;
   const monto    = parseFloat(document.getElementById('v-monto').value) || 0;
   const tipo     = document.getElementById('v-tipo').value;
-  if (!cliente || !producto || !monto) {
-    if(!cliente) document.getElementById('v-cliente').focus();
+
+  if (!cliente || prodIdx === '' || !monto) {
+    if (!cliente) document.getElementById('v-cliente').focus();
+    else if (prodIdx === '') document.getElementById('v-producto').focus();
     return;
   }
+
+  const producto = crmData.productos[prodIdx];
+
+  // Descontar stock del inventario
+  producto.stock = Math.max(0, producto.stock - cantidad);
+
   const estado = tipo === 'Crédito' ? 'Pendiente' : 'Pagada';
-  crmData.ventas.unshift({ fecha: today(), cliente, producto, monto, tipo, estado });
+  crmData.ventas.unshift({ fecha: today(), cliente, producto: producto.nombre, cantidad, monto, tipo, estado });
 
   // Actualizar la deuda del cliente según el tipo de venta
   const cl = findCliente(cliente);
@@ -277,7 +321,6 @@ function saveVenta() {
       cl.deuda = (cl.deuda || 0) + monto;
       if (cl.tag !== 'VIP') cl.tag = 'Debe';
     } else {
-      // Contado: restar de la deuda si tiene saldo pendiente
       cl.deuda = Math.max(0, (cl.deuda || 0) - monto);
       if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
     }
@@ -287,6 +330,7 @@ function saveVenta() {
   toggleForm('form-venta');
   renderVentas();
   renderClientes();
+  renderInventario();
 }
 
 function marcarPagada(i) {
@@ -335,7 +379,7 @@ function renderVentas() {
     <tr data-searchable="${v.cliente} ${v.producto} ${v.tipo} ${v.estado}">
       <td>${v.fecha}</td>
       <td>${v.cliente}</td>
-      <td>${v.producto}</td>
+      <td>${v.producto}${v.cantidad > 1 ? ` <span style="color:var(--clay);font-size:.8em">(x${v.cantidad})</span>` : ''}</td>
       <td>${fmt(v.monto)}</td>
       <td><span class="badge ${tipoClass[v.tipo]||''}">${v.tipo}</span></td>
       <td><span class="badge ${estClass[v.estado]||''}">${v.estado}</span></td>

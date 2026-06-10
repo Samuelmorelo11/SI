@@ -592,7 +592,12 @@
           <h3>➕ Nueva venta</h3>
           <div class="crm-form-grid">
             <div class="crm-field"><label>Cliente</label><input id="v-cliente" type="text" placeholder="Nombre del cliente"></div>
-            <div class="crm-field"><label>Producto / Servicio</label><input id="v-producto" type="text" placeholder="Ej. Corte de cabello"></div>
+            <div class="crm-field"><label>Producto / Servicio</label>
+              <select id="v-producto" onchange="onProductoChange()">
+                <option value="">— Selecciona un producto —</option>
+              </select>
+            </div>
+            <div class="crm-field"><label>Cantidad</label><input id="v-cantidad" type="number" placeholder="1" min="1" value="1" oninput="onCantidadChange()"></div>
             <div class="crm-field"><label>Monto ($)</label><input id="v-monto" type="number" placeholder="0" min="0"></div>
             <div class="crm-field"><label>Tipo de pago</label>
               <select id="v-tipo">
