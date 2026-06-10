@@ -259,6 +259,13 @@ function updateInvStats() {
 }
 
 // ── VENTAS ──
+function calcularTag(cliente) {
+  if (cliente.tag === 'VIP') return 'VIP';
+  const compras = crmData.ventas.filter(v => v.cliente.toLowerCase() === cliente.nombre.toLowerCase()).length;
+  if (cliente.deuda > 0) return 'Debe';
+  return compras > 3 ? 'Frecuente' : 'Nuevo';
+}
+
 function findCliente(nombre) {
   return crmData.clientes.find(c => c.nombre.toLowerCase() === nombre.toLowerCase());
 }
@@ -330,14 +337,13 @@ function saveVenta() {
     crmData.clientes.unshift(cl);
   }
 
-  // Actualizar la deuda del cliente según el tipo de venta
+  // Actualizar deuda y recalcular etiqueta
   if (tipo === 'Crédito') {
     cl.deuda = (cl.deuda || 0) + monto;
-    if (cl.tag !== 'VIP') cl.tag = 'Debe';
   } else {
     cl.deuda = Math.max(0, (cl.deuda || 0) - monto);
-    if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
   }
+  cl.tag = calcularTag(cl);
 
   saveStorage();
   toggleForm('form-venta');
@@ -354,7 +360,7 @@ function marcarPagada(i) {
     if (cl) {
       cl.deuda = Math.max(0, (cl.deuda || 0) - venta.monto);
       // Si ya no debe nada, quitarle el tag "Debe"
-      if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
+      cl.tag = calcularTag(cl);
     }
   }
   crmData.ventas[i].estado = 'Pagada';
@@ -370,7 +376,7 @@ function deleteVenta(i) {
     const cl = findCliente(venta.cliente);
     if (cl) {
       cl.deuda = Math.max(0, (cl.deuda || 0) - venta.monto);
-      if (cl.deuda === 0 && cl.tag === 'Debe') cl.tag = 'Frecuente';
+      cl.tag = calcularTag(cl);
     }
   }
   crmData.ventas.splice(i, 1);
