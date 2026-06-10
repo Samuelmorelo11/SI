@@ -238,17 +238,97 @@ function renderInventario() {
     return;
   }
   tbody.innerHTML = list.map((p,i) => {
+    const stockColor = p.stock === 0 ? '#dc3545' : p.stock <= 5 ? '#ffc107' : 'inherit';
     const estado = p.stock===0 ? '<span class="badge badge-out">Sin stock</span>' : p.stock<=5 ? '<span class="badge badge-low">Stock bajo</span>' : '<span class="badge badge-stock">En stock</span>';
     return `<tr data-searchable="${p.nombre} ${p.cat}">
-      <td><div class="td-name"><div class="crm-avatar" style="background:${pickColor(p.nombre)}">${initials(p.nombre)}</div><div class="n">${p.nombre}</div></div></td>
+      <td><div class="td-name"><div class="crm-avatar" style="background:${pickColor(p.nombre)}">${initials(p.nombre)}</div><div class="n" style="cursor:pointer;text-decoration:underline;color:var(--clay)" onclick="verProducto(${i})">${p.nombre}</div></div></td>
       <td>${p.cat}</td>
-      <td>${p.stock} uds.</td>
+      <td style="color:${stockColor};font-weight:600">${p.stock} uds.</td>
       <td>${fmt(p.precio)}</td>
       <td>${estado}</td>
       <td><div class="row-actions"><button class="btn-row" onclick="deleteProducto(${i})">Eliminar</button></div></td>
     </tr>`;
   }).join('');
+  renderAlertaStock();
 }
+
+function renderAlertaStock() {
+  const bajos = crmData.productos.filter(p => p.stock > 0 && p.stock <= 5);
+  const sinStock = crmData.productos.filter(p => p.stock === 0);
+  const alerta = document.getElementById('inv-alerta-stock');
+  const lista  = document.getElementById('inv-alerta-lista');
+  if (!alerta) return;
+  const todos = [...sinStock.map(p => `<strong>${p.nombre}</strong> (sin stock)`),
+                 ...bajos.map(p => `<strong>${p.nombre}</strong> (${p.stock} uds.)`)];
+  if (todos.length) {
+    lista.innerHTML = todos.join(' · ');
+    alerta.style.display = 'block';
+  } else {
+    alerta.style.display = 'none';
+  }
+}
+
+// ── MODAL HISTORIAL PRODUCTO ──
+function verProducto(i) {
+  const p = crmData.productos[i];
+  const movimientos = crmData.ventas.filter(v => v.producto.toLowerCase() === p.nombre.toLowerCase());
+  const totalVendido = movimientos.reduce((s, v) => s + (v.cantidad || 1), 0);
+  const totalIngresos = movimientos.reduce((s, v) => s + v.monto, 0);
+
+  const filas = movimientos.length
+    ? movimientos.map(v => `
+        <tr>
+          <td>${v.fecha}</td>
+          <td>${v.cliente}</td>
+          <td>${v.cantidad || 1} uds.</td>
+          <td>${fmt(v.monto)}</td>
+          <td>${v.tipo}</td>
+          <td><span class="badge ${v.estado === 'Pagada' ? 'badge-frec' : 'badge-debe'}">${v.estado}</span></td>
+        </tr>`).join('')
+    : '<tr><td colspan="6" style="text-align:center;color:#aaa;padding:12px">Sin movimientos registrados</td></tr>';
+
+  const stockColor = p.stock === 0 ? '#dc3545' : p.stock <= 5 ? '#e07000' : '#2d7a4f';
+  const stockLabel = p.stock === 0 ? 'Sin stock' : p.stock <= 5 ? `⚠️ Solo ${p.stock} uds.` : `${p.stock} uds.`;
+
+  document.getElementById('modal-producto-contenido').innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div class="crm-avatar" style="background:${pickColor(p.nombre)};width:52px;height:52px;font-size:1.3em">${initials(p.nombre)}</div>
+      <div>
+        <div style="font-size:1.2em;font-weight:700">${p.nombre}</div>
+        <div style="color:#888;font-size:.9em">${p.cat} · ${fmt(p.precio)} por unidad</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:1.1em;font-weight:700;color:${stockColor}">${stockLabel}</div>
+        <div style="font-size:.8em;color:#aaa">en inventario</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div style="background:var(--bg,#f5f5f5);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:1.4em;font-weight:700">${totalVendido}</div>
+        <div style="font-size:.8em;color:#888">Unidades vendidas</div>
+      </div>
+      <div style="background:var(--bg,#f5f5f5);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:1.4em;font-weight:700">${fmt(totalIngresos)}</div>
+        <div style="font-size:.8em;color:#888">Total en ingresos</div>
+      </div>
+    </div>
+    <div style="font-weight:600;margin-bottom:8px">Historial de movimientos</div>
+    <div style="overflow-x:auto">
+      <table class="crm-table" style="font-size:.85em">
+        <thead><tr><th>Fecha</th><th>Cliente</th><th>Cantidad</th><th>Monto</th><th>Tipo</th><th>Estado</th></tr></thead>
+        <tbody>${filas}</tbody>
+      </table>
+    </div>
+  `;
+  document.getElementById('modal-producto').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalProducto() {
+  document.getElementById('modal-producto').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
 function updateInvStats() {
   const list = crmData.productos;
   document.getElementById('stat-total-inv').textContent = list.length;
