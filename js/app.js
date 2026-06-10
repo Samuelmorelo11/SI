@@ -91,6 +91,8 @@ function handleRegister() {
   crmUser.nombre = nombre;
   crmUser.negocio = negocio;
   registeredAccount = { nombre, negocio, wapp, pass };
+  localStorage.setItem('cc_account', JSON.stringify(registeredAccount));
+  localStorage.setItem('cc_user', JSON.stringify(crmUser));
 
   document.getElementById('dash-nombre').textContent = firstName;
   document.getElementById('dash-negocio-title').textContent = negocio;
@@ -104,8 +106,18 @@ function handleRegister() {
 }
 
 // ── CRM DATA ──
-const crmData = { clientes: [], productos: [], ventas: [] };
-let crmUser = { nombre: '', negocio: '' };
+const crmData = {
+  clientes:  JSON.parse(localStorage.getItem('cc_clientes')  || '[]'),
+  productos: JSON.parse(localStorage.getItem('cc_productos') || '[]'),
+  ventas:    JSON.parse(localStorage.getItem('cc_ventas')    || '[]'),
+};
+let crmUser = JSON.parse(localStorage.getItem('cc_user') || '{"nombre":"","negocio":""}');
+
+function saveStorage() {
+  localStorage.setItem('cc_clientes',  JSON.stringify(crmData.clientes));
+  localStorage.setItem('cc_productos', JSON.stringify(crmData.productos));
+  localStorage.setItem('cc_ventas',    JSON.stringify(crmData.ventas));
+}
 
 function openCRM() {
   document.getElementById('dashboardScreen').classList.remove('active');
@@ -115,6 +127,9 @@ function openCRM() {
   document.getElementById('crmScreen').classList.add('active');
   document.body.style.overflow = 'hidden';
   switchTab('clientes', document.querySelector('.crm-nav-item'));
+  renderClientes();
+  renderInventario();
+  renderVentas();
 }
 function closeCRM() {
   document.getElementById('crmScreen').classList.remove('active');
@@ -159,11 +174,13 @@ function saveCliente() {
   const deuda  = parseFloat(document.getElementById('cl-deuda').value) || 0;
   if (!nombre) { document.getElementById('cl-nombre').focus(); return; }
   crmData.clientes.push({ nombre, wapp, ciudad, tag, deuda });
+  saveStorage();
   toggleForm('form-cliente');
   renderClientes();
 }
 function deleteCliente(i) {
   crmData.clientes.splice(i, 1);
+  saveStorage();
   renderClientes();
 }
 function renderClientes() {
@@ -202,10 +219,11 @@ function saveProducto() {
   const precio = parseFloat(document.getElementById('pr-precio').value) || 0;
   if (!nombre) { document.getElementById('pr-nombre').focus(); return; }
   crmData.productos.push({ nombre, cat, stock, precio });
+  saveStorage();
   toggleForm('form-producto');
   renderInventario();
 }
-function deleteProducto(i) { crmData.productos.splice(i,1); renderInventario(); }
+function deleteProducto(i) { crmData.productos.splice(i,1); saveStorage(); renderInventario(); }
 function renderInventario() {
   const tbody = document.getElementById('inventario-tbody');
   const list = crmData.productos;
@@ -246,11 +264,12 @@ function saveVenta() {
     return;
   }
   crmData.ventas.unshift({ fecha: today(), cliente, producto, monto, tipo, estado: tipo==='Crédito' ? 'Pendiente' : 'Pagada' });
+  saveStorage();
   toggleForm('form-venta');
   renderVentas();
 }
-function marcarPagada(i) { crmData.ventas[i].estado='Pagada'; renderVentas(); }
-function deleteVenta(i) { crmData.ventas.splice(i,1); renderVentas(); }
+function marcarPagada(i) { crmData.ventas[i].estado='Pagada'; saveStorage(); renderVentas(); }
+function deleteVenta(i) { crmData.ventas.splice(i,1); saveStorage(); renderVentas(); }
 function renderVentas() {
   const tbody = document.getElementById('ventas-tbody');
   const list = crmData.ventas;
@@ -299,7 +318,7 @@ const shakeStyle = document.createElement('style');
 shakeStyle.textContent = `@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }`;
 document.head.appendChild(shakeStyle);
 
-let registeredAccount = null;
+let registeredAccount = JSON.parse(localStorage.getItem('cc_account') || 'null');
 
 // Attach to plan buttons
 document.querySelectorAll('.btn-plan').forEach((btn, i) => {
